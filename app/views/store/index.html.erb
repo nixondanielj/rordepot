@@ -1,2 +1,17 @@
-<h1>Store#index</h1>
-<p>Find me in app/views/store/index.html.erb</p>
+<% if notice %>
+	<p id="notice"><%= notice %></p>
+<% end %>
+
+<h1>Your Catalog</h1>
+<% @products.each do |p| %>
+	<div class="entry">
+		<%= image_tag(p.image_url) %>
+		<h3><%= p.title %></h3>
+		<%= sanitize p.description %>
+		<div class="price_line">
+			<span class="price_line">
+				<%= p.price %>
+			</span>
+		</div>
+	</div>
+<% end %>
