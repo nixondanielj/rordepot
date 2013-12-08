@@ -23,19 +23,26 @@ class ProductTest < ActiveSupport::TestCase
   end
   
   test "product price can be positive integer" do
-    product = get_valid_product price: 5
-    assert !product.errors[:price].any?
+    product = get_valid_product
+    product.price = 5
+    assert !product.errors[:price].any?, "#{product.price} should be valid for product price"
+    assert product.valid?
   end
   
   test "product price can be positive decimal" do
-    product = get_valid_product price: 5.50
-    assert !product.errors[:price].any?
+    product = get_valid_product
+    product.price = 5.5
+    assert !product.errors[:price].any?, "#{product.price} should be valid for product price"
+    assert product.valid?
   end
   
-  test "image_url is a valid format" do
+  test "image_url can be a valid format" do
     ok = %w{ test.gif test.png test.jpg http://www.test.com/asdf_1234.jpg}
-    ok.each do |url|
-      assert get_valid_product(image_url: url).valid?, "#{url} should be a valid image_url"
+    ok.each do |link|
+      product = get_valid_product
+      product.image_url = link
+      assert !product.errors[:image_url].any?, "#{link} should be valid for product image"
+      assert product.valid?
     end
   end
 end
